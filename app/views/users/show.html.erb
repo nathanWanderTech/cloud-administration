@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        User
+      </div>
+
+      <div class="panel-body">
+        <p>
+          <strong>Email Address:</strong>
+          <%= @user.email %>
+        </p>
+
+        <p>
+          <strong>Current Signed In IP:</strong>
+          <%= @user.current_sign_in_ip %>
+        </p>
+
+        <p>
+          <strong>Lasted Signed In IP:</strong>
+          <%= @user.last_sign_in_ip %>
+        </p>
+
+        <p>
+          <strong>Currently Signed In At:</strong>
+          <%= @user.current_sign_in_at %>
+        </p>
+
+        <p>
+          <strong>Last Signed In At:</strong>
+          <%= @user.last_sign_in_at %>
+        </p>
+
+        <p>
+          <strong>Created At :</strong>
+          <%= @user.created_at.localtime %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        Articles Owned
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @user.articles.each do |article| %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%= link_to "Show", article %></td>
+        </tr>
+        <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        Comments Owned
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Message</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @user.comments.each do |comment| %>
+        <tr>
+          <td><%= comment.message %></td>
+          <td><%= link_to "Show", comment %></td>
+        </tr>
+        <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>

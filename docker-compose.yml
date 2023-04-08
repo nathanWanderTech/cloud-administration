@@ -1,0 +1,44 @@
+version: '3.4'
+services:
+  # These are backend services that the app depends on
+  db:
+    image: postgres:14.3-alpine
+    ports:
+      - "54320:5432"
+  redis:
+    image: redis:5.0-alpine
+    command: redis-server
+    logging:
+      driver: none
+  # These are the components of the app
+  guard:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1001}
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - app
+      - redis
+    environment:
+      - RAILS_ENV=test
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=
+    command: bundle exec guard --no-bundler-warning --no-interactions
+  app:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1001}
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - RAILS_ENV=development
+    entrypoint: ["bin/docker_start.sh"]
+
